@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>INVOICE</title>
+  </head>
+  <body>
+    <div
+      id="toBePrint"
+      style="
+        border: 3px solid black;
+        width: 98%;
+        height: 100%;
+        padding: 5px;
+        
+      "
+    >
+      <p
+        style="
+          text-align: center;
+          font-size: 40px;
+          font-weight: bold;
+          margin: 0;
+        "
+      >
+        E-Menu Service
+      </p>
+      <p style="text-align: center; margin: 0">
+        <span style="font-size: 35px; font-weight: bold"
+          >{{order.restaurant.name}}</span
+        >
+        <br />
+        <span style="font-size: 30px"
+          >{{order.restaurant.location.address}}</span
+        >
+      </p>
+      <p style="font-size: 20px; font-weight: bold; margin-left: 5px;">Table: {{order.tableNumber}}</p>
+      <p
+        style="
+          width: 95%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 5px;
+          margin-left: 5px;
+        "
+      >
+        <span style="font-size: 15px">INVOICE:{{order.orderId}}</span>
+        <span id="orderDate" style="font-size: 15px; float: right;"
+          >Date:{{toHumanDateFormat order.orderDate}}</span
+        >
+    </p>
+      <table style="width: 100%; text-align: center">
+        <thead>
+          <tr style="border: 2px solid black">
+            <th style="padding: 2px; font-size: 20px">SL</th>
+            <th style="padding: 2px; font-size: 20px">Item</th>
+            <th style="padding: 2px; font-size: 20px">AddOn's</th>
+            <th style="padding: 2px; font-size: 20px">Rate</th>
+            <th style="padding: 2px; font-size: 20px">Quantity</th>
+            <th style="padding: 2px; font-size: 20px">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each order.items}}
+          <tr style="padding-top: 10px;">
+            <td style="padding: 2px ; font-size: 20px">{{@index}}</td>
+            <td style="padding: 2px; font-size: 20px">{{this.item.item}}</td>
+            <td style="padding: 2px; font-size: 20px">
+              {{#each this.addons}} {{ this.item}} - £{{this.price}} {{/each}}
+            </td>
+            <td style="padding: 2px; font-size: 20px">{{this.item.price}}</td>
+            <td style="padding: 2px; font-size: 20px">{{this.quantity}}</td>
+            <td style="padding: 2px; font-size: 20px">£{{this.itemPrice}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+        <tfoot
+          style="border-top: 5px solid black; border-bottom: 5px solid black"
+        >
+          <tr>
+            <td
+              colspan="5"
+              style="
+                text-align: right;
+                padding: 2px;
+                font-weight: bold;
+                font-size: 20px;
+              "
+            >
+              Sub Total:
+            </td>
+            <td style="padding: 2px; font-size:20px">£{{order.subTotal}}</td>
+          </tr>
+          <tr>
+            <td
+              colspan="5"
+              style="
+                text-align: right;
+                padding: 2px;
+                font-weight: bold;
+                font-size: 20px;
+              "
+            >
+              Service Charge:
+            </td>
+            <td style="padding: 2px; font-size:20px">£{{order.serviceCharge}}</td>
+          </tr>
+          <tr>
+            <td
+              colspan="5"
+              style="
+                text-align: right;
+                padding: 2px;
+                font-weight: bold;
+                font-size: 20px;
+              "
+            >
+              Grand Total:
+            </td>
+            <td style="padding: 2px; font-size:20px">£{{order.grandTotal}}</td>
+          </tr>
+        </tfoot>
+      </table>
+      <hr style="margin: 4px 0" />
+      <p style="text-align: center; margin: 0; justify-content: end ; font-size:20px">
+        Thank You! <br />
+        Visit Again
+      </p>
+    </div>
+  </body>
+</html>
